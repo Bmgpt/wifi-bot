@@ -1,0 +1,27 @@
+{
+  "name": "wifi-bot",
+  "version": "1.0.0",
+  "description": "",
+  "main": "scanner.js",
+  "dependencies": {
+    "dotenv": "^5.0.1",
+    "local-devices": "^1.1.1",
+    "node-telegram-bot-api": "^0.30.0",
+    "tape": "^4.9.0"
+  },
+  "scripts": {
+    "start": "node scanner.js",
+    "test": "tape utils.test.js"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/vnglst/wifi-bot.git"
+  },
+  "keywords": [],
+  "author": "Koen van Gilst <koen.vangilst@gmail.com> (http://koenvangilst.nl)",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/vnglst/wifi-bot/issues"
+  },
+  "homepage": "https://github.com/vnglst/wifi-bot#readme"
+}
