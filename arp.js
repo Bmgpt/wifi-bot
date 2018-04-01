@@ -10,6 +10,7 @@ const findLocalDevices = () =>
     const resp = lns.map(ln => {
       const parts = ln.split(' ')
       const mac = parts[3]
+      // TODO: Normalize HEX number in mac addresses (pad with 0)
       return { mac }
     })
     return resp
