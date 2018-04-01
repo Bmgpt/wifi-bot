@@ -28,10 +28,10 @@ const checkAddedAndRemoved = devices => {
 }
 
 const formatter = (device, coming) => {
-  const name = device.name !== '?' ? device.name : device.mac
+  const name = device.name ? device.name : device.mac
   const msg = coming ? 'is online' : 'went away'
   const icon = coming ? '✅' : '❌'
-  return `${icon} '${name}' ${msg}`
+  return `${icon} ${name} ${msg}`
 }
 
 const toString = ({ added, removed }) => {

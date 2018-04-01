@@ -1,7 +1,7 @@
 process.env['NTBA_FIX_319'] = 1
 
 require('dotenv').config()
-const findLocalDevices = require('local-devices')
+const arp = require('./arp.js')
 const TelegramBot = require('node-telegram-bot-api')
 const utils = require('./utils')
 
@@ -9,7 +9,7 @@ const utils = require('./utils')
 const token = process.env.TELEGRAM_TOKEN
 let scanIntervalId
 
-findLocalDevices()
+arp.findLocalDevices()
   .then(utils.enrichDeviceData)
   .then(console.log)
   .catch(console.log)
@@ -25,7 +25,7 @@ bot.onText(/\/scan/, msg => {
   scanIntervalId = setInterval(() => {
     if (!isSearching) {
       isSearching = true
-      findLocalDevices()
+      arp.findLocalDevices()
         .then(utils.enrichDeviceData)
         .then(utils.checkAddedAndRemoved)
         .then(utils.toString)
