@@ -11,7 +11,8 @@ const token = process.env.TELEGRAM_TOKEN
 let scanIntervalId
 
 // logging at startup
-arp.findLocalDevices()
+arp
+  .findLocalDevices()
   .then(utils.enrichDeviceData)
   .then(console.log)
   .catch(console.log)
@@ -27,7 +28,8 @@ bot.onText(/\/scan/, msg => {
   scanIntervalId = setInterval(() => {
     if (!isSearching) {
       isSearching = true
-      arp.findLocalDevices()
+      arp
+        .findLocalDevices()
         .then(utils.enrichDeviceData)
         // TODO: start pinging ip's to check if device is away
         // for instance with this: ping -c 10 192.168.1.78
@@ -48,4 +50,19 @@ bot.onText(/\/scan/, msg => {
 bot.onText(/\/stopscan/, msg => {
   bot.sendMessage(msg.chat.id, 'stopped scanning')
   clearInterval(scanIntervalId)
+})
+
+bot.onText(/\/online/, msg => {
+  bot.sendMessage(msg.chat.id, 'checking who is online...')
+  arp
+    .findLocalDevices()
+    .then(utils.enrichDeviceData)
+    .then(d => { return { added: d, removed: [] } })
+    .then(utils.toString)
+    .then(str => {
+      if (str) bot.sendMessage(msg.chat.id, str)
+    })
+    .catch(err => {
+      console.log('Error while search', err)
+    })
 })
