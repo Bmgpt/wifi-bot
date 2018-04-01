@@ -1,3 +1,5 @@
+process.env['NTBA_FIX_319'] = 1
+
 require('dotenv').config()
 const findLocalDevices = require('local-devices')
 const TelegramBot = require('node-telegram-bot-api')
@@ -6,6 +8,11 @@ const utils = require('./utils')
 // replace the value below with the Telegram token you receive from @BotFather
 const token = process.env.TELEGRAM_TOKEN
 let scanIntervalId
+
+findLocalDevices()
+  .then(utils.enrichDeviceData)
+  .then(console.log)
+  .catch(console.log)
 
 // Create a bot that uses 'polling' to fetch new updates
 const bot = new TelegramBot(token, {
@@ -37,4 +44,3 @@ bot.onText(/\/stopscan/, msg => {
   bot.sendMessage(msg.chat.id, 'stopped scanning')
   clearInterval(scanIntervalId)
 })
-
